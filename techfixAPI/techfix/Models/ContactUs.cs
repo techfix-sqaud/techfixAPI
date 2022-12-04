@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 
 namespace techfix.Models
 {
-    public class Quotes
+    public class ContactUs
     {
-
         public int id { get; set; }
-        public string FullName { get; set; }
+        public string Name { get; set; }
         public string Email { get; set; }
-        public string deviceModel { get; set; }
-        public string Description { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
         public bool signature { get; set; }
     }
 }

@@ -1,3 +1,6 @@
+using Microsoft.Win32.SafeHandles;
+using System.Numerics;
+using System.Security.AccessControl;
 using System.Reflection.Emit;
 using System;
 using Microsoft.EntityFrameworkCore;
@@ -14,14 +17,19 @@ namespace techfix.Data
         {
         }
         public virtual DbSet<Subscribers> Subscriber { get; set; }
-        public virtual DbSet<Quotes> Qoute { get; set; }
+        public virtual DbSet<Quotes> Quote { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Subscribers>();
-            modelBuilder.Entity<Quotes>();
+            modelBuilder.Entity<Subscribers>(S => {
+            S.Property(s => s.id).ValueGeneratedOnAdd();
+            S.HasIndex(s => s.Email).IsUnique();
+        });
+            modelBuilder.Entity<Quotes>(Q => {
+                Q.Property(q => q.id).ValueGeneratedOnAdd();           
+            });
         }
 
     }

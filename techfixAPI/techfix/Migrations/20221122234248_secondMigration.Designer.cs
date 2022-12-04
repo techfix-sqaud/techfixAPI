@@ -12,8 +12,8 @@ using techfix.Data;
 namespace techfix.Migrations
 {
     [DbContext(typeof(ApiDBContext))]
-    [Migration("20221118141341_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221122234248_secondMigration")]
+    partial class secondMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace techfix.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -45,7 +45,7 @@ namespace techfix.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("signature")
+                    b.Property<bool>("deviceModel")
                         .HasColumnType("boolean");
 
                     b.Property<string>("subject")
@@ -54,7 +54,7 @@ namespace techfix.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Qoute");
+                    b.ToTable("Quote");
                 });
 
             modelBuilder.Entity("techfix.Models.Subscribers", b =>
@@ -63,7 +63,7 @@ namespace techfix.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("id"));
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
@@ -72,6 +72,9 @@ namespace techfix.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Subscriber");
                 });
