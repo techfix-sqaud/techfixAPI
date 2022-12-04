@@ -7,26 +7,26 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace techfix.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class secondMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Qoute",
+                name: "Quote",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityAlwaysColumn),
                     FullName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    subject = table.Column<string>(type: "text", nullable: false),
+                    deviceModel = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     signature = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Qoute", x => x.id);
+                    table.PrimaryKey("PK_Quote", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,7 +34,7 @@ namespace techfix.Migrations
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityAlwaysColumn),
                     Email = table.Column<string>(type: "text", nullable: true),
                     joinDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -42,13 +42,19 @@ namespace techfix.Migrations
                 {
                     table.PrimaryKey("PK_Subscriber", x => x.id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subscriber_Email",
+                table: "Subscriber",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Qoute");
+                name: "Quote");
 
             migrationBuilder.DropTable(
                 name: "Subscriber");

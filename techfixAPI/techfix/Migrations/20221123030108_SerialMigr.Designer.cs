@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using techfix.Data;
@@ -11,9 +12,11 @@ using techfix.Data;
 namespace techfix.Migrations
 {
     [DbContext(typeof(ApiDBContext))]
-    partial class ApiDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221123030108_SerialMigr")]
+    partial class SerialMigr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,12 +45,12 @@ namespace techfix.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("signature")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("deviceModel")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("signature")
-                        .HasColumnType("boolean");
 
                     b.HasKey("id");
 
@@ -63,7 +66,6 @@ namespace techfix.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("joinDate")
