@@ -1,0 +1,13 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: '3.4'
+
+services:
+  techfix:
+    image: techfix
+    build:
+      context: .
+      dockerfile: techfixAPI/techfix/Dockerfile
+    ports:
+      - 5000:5000,
+platform: osx, windows/amd64,linux/arm64/v8
