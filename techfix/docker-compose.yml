@@ -1,8 +1,25 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
 
 version: '3.4'
-
 services:
+- cors:
+    allow_origins:*
+
+  dockerfile_path: Dockerfile
+  envs:
+  - key: HUGO_VERSION
+    scope: RUN_AND_BUILD_TIME
+    value: 0.81.0
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: https://github.com/techfix-sqaud/techfixAPI.git
+  http_port: 80
+  instance_count: 2
+  instance_size_slug: professional-xs
+  name: example-service-name
+  routes:
+  - path: /
   techfix:
     image: techfix
     build:
@@ -11,3 +28,10 @@ services:
     ports:
       - 5000:5000,
 platform: osx, windows/amd64,linux/arm64/v8
+alerts:
+- rule: DEPLOYMENT_FAILED
+
+features:
+- enable-kata-build
+name: example-app-name
+region: nyc,
